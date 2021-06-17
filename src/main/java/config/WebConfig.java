@@ -78,6 +78,8 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     @Autowired
     Environment environment;
 
+
+
     @Bean(name = "multipartResolver")
     public CommonsMultipartResolver resolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
@@ -85,12 +87,16 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         return resolver;
     }
 
+
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String file = environment.getProperty("uploadFile").toString();
         registry.addResourceHandler("/i/**")
                 .addResourceLocations("file:" + file);
     }
+
+
 
     @Override
     public void configureDefaultServletHandling(
@@ -105,15 +111,20 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         return entityManagerFactory.createEntityManager();
     }
 
+
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan("model");
         sessionFactory.setHibernateProperties(additionalProperties());
-
         return sessionFactory;
     }
+
+
+
+
+
 
     @Bean
     public DataSource dataSource() {
@@ -124,6 +135,8 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         dataSource.setPassword("677264");
         return dataSource;
     }
+
+
 
     Properties additionalProperties() {
         Properties properties = new Properties();

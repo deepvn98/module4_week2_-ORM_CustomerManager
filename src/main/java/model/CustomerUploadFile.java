@@ -21,6 +21,9 @@ public class CustomerUploadFile {
         this.img = img;
     }
 
+    public CustomerUploadFile() {
+    }
+
     public int getId() {
         return id;
     }

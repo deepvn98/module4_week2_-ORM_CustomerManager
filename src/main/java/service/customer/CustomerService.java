@@ -37,23 +37,66 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void save(Customer customer) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+//            Customer customer1 = findByID(customer.getId());
+//            customer1.setId(customer.getId());
+//            customer1.setName(customer.getName());
+//            customer1.setAddress(customer.getAddress());
+//            customer1.setImg(customer.getImg());
+            session.save(customer);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            session.close();
+        }
 
     }
-
     @Override
     public void delete(int id) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.remove(findByID(id));
+            transaction.commit();
+        } finally {
+            session.close();
+        }
+
 
     }
 
     @Override
     public void update(int id, Customer customer) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            Customer customer1 = findByID(id);
+            customer1.setName(customer.getName());
+            customer1.setAddress(customer.getAddress());
+            customer1.setImg(customer.getImg());
+            session.update(customer1);
+            transaction.commit();
+        }catch (Exception e){
+            if (transaction!=null){
+                transaction.rollback();
+            }
+        }finally {
+            session.close();
+        }
+
 
     }
-
-
-
-
-
 
 
 }
